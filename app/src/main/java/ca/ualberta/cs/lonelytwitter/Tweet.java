@@ -15,6 +15,7 @@ public abstract class Tweet {
 
     public Tweet(String message){
         this.message = message;
+        this.date = new Date();
     }
 
     public Tweet(String message, Date date){
@@ -28,13 +29,14 @@ public abstract class Tweet {
         moodList.add(mood);
     }
 
-    public void setMessage(String message) {
+    public void setMessage(String message) throws TweetTooLongException{
         if (message.length() > 140) {
             // Do something to raise an exception
             throw new TweetTooLongException();
         }
         this.message = message;
     }
+
     public void setDate(Date date) {
         this.date = date;
     }
@@ -47,4 +49,8 @@ public abstract class Tweet {
         return date;
     }
 
+    @Override
+    public String toString(){
+        return date.toString() + " | " + message;
+    }
 }

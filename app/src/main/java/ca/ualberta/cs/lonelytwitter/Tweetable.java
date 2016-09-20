@@ -7,10 +7,7 @@ import java.util.Date;
  */
 public interface Tweetable{
     public String getMessage();
-    public Date getdate();
+    public Date getDate();
 
-    @Override
-    public Boolean isImportant() {
-        return Boolean.FALSE;
-    }
+
 }
