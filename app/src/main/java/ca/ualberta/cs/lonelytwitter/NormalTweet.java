@@ -1,11 +1,11 @@
 package ca.ualberta.cs.lonelytwitter;
 
 /**
- * Created by alvin on 9/13/2016.
+ * Created by watts1 on 9/13/16.
  */
 public class NormalTweet extends Tweet implements Tweetable {
 
-    public NormalTweet(String message) {
+    public NormalTweet(String message){
         super(message);
     }
 
