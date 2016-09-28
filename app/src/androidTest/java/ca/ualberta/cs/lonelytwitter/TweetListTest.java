@@ -56,6 +56,9 @@ public class TweetListTest extends ActivityInstrumentationTestCase2<LonelyTwitte
         list.addTweet(b);
         list.addTweet(a);
 
+        // Check it was false -> sorted -> true
+        assertFalse(list.getTweet(0).getDate().before(list.getTweet(1).getDate()));
+        list.getTweets();
         assertTrue(list.getTweet(0).getDate().before(list.getTweet(1).getDate()));
     }
 
