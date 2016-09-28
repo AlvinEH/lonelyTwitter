@@ -14,8 +14,14 @@ public class TweetListTest extends ActivityInstrumentationTestCase2<LonelyTwitte
         TweetList list = new TweetList();
 
         Tweet tweet = new NormalTweet("Hello!");
-        list.add(tweet);
-        assertTrue(list.hasTweet(tweet));
+        try {
+            list.addTweet(tweet);
+            list.addTweet(tweet);
+            fail();
+        }
+        catch (IllegalArgumentException e) {
+        }
+
     }
 
     public void testHasTweet() {
@@ -23,7 +29,7 @@ public class TweetListTest extends ActivityInstrumentationTestCase2<LonelyTwitte
 
         Tweet tweet = new NormalTweet("Hello!");
         assertFalse(list.hasTweet(tweet));
-        list.add(tweet);
+        list.addTweet(tweet);
         assertTrue(list.hasTweet(tweet));
     }
 
@@ -33,9 +39,46 @@ public class TweetListTest extends ActivityInstrumentationTestCase2<LonelyTwitte
         Tweet a = new NormalTweet("Hello!");
         Tweet b = new NormalTweet("Hi!");
 
-        list.add(a);
-        list.add(b);
+        list.addTweet(a);
+        list.addTweet(b);
 
         assertEquals(a, list.getTweet(0));
+        assertEquals(b, list.getTweet(1));
+
+    }
+    public void testGetTweets() {
+        TweetList list = new TweetList();
+
+        Tweet a = new NormalTweet("Hello!");
+        Tweet b = new NormalTweet("Hi!");
+
+        a.getDate().setTime(1);
+        list.addTweet(b);
+        list.addTweet(a);
+
+        assertTrue(list.getTweet(0).getDate().before(list.getTweet(1).getDate()));
+    }
+
+    public void testRemoveTweet() {
+        TweetList list = new TweetList();
+
+        Tweet a = new NormalTweet("Hello!");
+        list.addTweet(a);
+        assertTrue(list.hasTweet(a));
+
+        list.removeTweet(a);
+        assertFalse(list.hasTweet(a));
+    }
+
+    public void testGetCount() {
+        TweetList list = new TweetList();
+
+        Tweet a = new NormalTweet("Hello!");
+        Tweet b = new NormalTweet("Hi!");
+
+        list.addTweet(b);
+        list.addTweet(a);
+
+        assertEquals(2,list.getCount());
     }
 }
