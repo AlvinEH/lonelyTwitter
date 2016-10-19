@@ -65,12 +65,23 @@ public class LonelyTwitterActivity extends Activity {
 			}
 		});
 
-		clearButton.setOnClickListener(new View.OnClickListener() {
+        clearButton.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
+                ElasticsearchTweetController.GetTweetsTask getTweetsTask = new ElasticsearchTweetController.GetTweetsTask();
+
+                String findText = bodyText.getText().toString();
 				setResult(RESULT_OK);
-				tweetList.clear();
-				deleteFile(FILENAME);  // TODO deprecate this button
+                getTweetsTask.execute(findText);
+                try {
+                    tweetList.addAll(getTweetsTask.get());
+                }
+
+                catch (Exception e) {
+                    Log.i("Error", "Failed to get the tweets out of the async object.");
+                }
+//				tweetList.clear();
+				//deleteFile(FILENAME);  // TODO deprecate this button
 				adapter.notifyDataSetChanged();
 			}
 		});
@@ -94,7 +105,8 @@ public class LonelyTwitterActivity extends Activity {
 		super.onStart();
 		// loadFromFile(); // TODO replace this with elastic search
 		ElasticsearchTweetController.GetTweetsTask getTweetsTask = new ElasticsearchTweetController.GetTweetsTask();
-		getTweetsTask.execute("");
+
+        getTweetsTask.execute("");
 		try {
 			tweetList = getTweetsTask.get();
 		}
